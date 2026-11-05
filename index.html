@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Programme jour par jour – Croisière MSC Seaview, Caraïbes, 13 au 21 mars 2027" />
+<meta name="theme-color" content="#0b3954" />
+<title>Carnet de croisière – MSC Seaview · Caraïbes 2027</title>
+<style>
+  :root{
+    --bleu:#0b3954; --bleu2:#084d6b; --turquoise:#1ba0a2; --sable:#f4ead6;
+    --fond:#f6fbfb; --texte:#16323f; --accent:#ff6b35;
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--fond);color:var(--texte);line-height:1.6}
+  header{background:linear-gradient(135deg,var(--bleu) 0%,var(--bleu2) 60%,var(--turquoise) 100%);color:#fff;padding:1.6rem 1rem 1.2rem;text-align:center}
+  header h1{font-size:1.5rem;letter-spacing:.5px}
+  header p{opacity:.9;font-size:.95rem;margin-top:.3rem}
+  .badge{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;padding:.15rem .8rem;font-size:.8rem;font-weight:600;margin-top:.6rem}
+  nav{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #dde7e7;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
+  nav button{border:none;background:none;padding:.7rem .9rem;font-size:.85rem;font-weight:600;color:var(--bleu);cursor:pointer;border-bottom:3px solid transparent;font-family:inherit}
+  nav button.actif{color:var(--accent);border-bottom-color:var(--accent)}
+  nav button:hover{background:#eef6f6}
+  main{max-width:820px;margin:0 auto;padding:1.2rem 1rem 3rem}
+  .carte{background:#fff;border-radius:16px;box-shadow:0 4px 18px rgba(11,57,84,.08);padding:1.4rem;margin-top:1rem;animation:apparait .25s ease}
+  @keyframes apparait{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .carte h2{color:var(--bleu);font-size:1.25rem;margin-bottom:.2rem}
+  .carte .date{color:var(--accent);font-weight:700;font-size:.9rem;text-transform:uppercase;letter-spacing:.5px}
+  .escale{display:inline-block;background:var(--sable);color:#6b4f12;border-radius:8px;padding:.2rem .7rem;font-size:.8rem;font-weight:600;margin:.5rem 0 .8rem}
+  ul{margin:.6rem 0 .6rem 1.1rem}
+  li{margin:.35rem 0}
+  .conseil{background:#e6f4f4;border-left:4px solid var(--turquoise);border-radius:0 8px 8px 0;padding:.7rem .9rem;font-size:.9rem;margin-top:.9rem}
+  .conseil strong{color:var(--bleu2)}
+  .horaires{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:.8rem}
+  .pastille{background:var(--bleu);color:#fff;border-radius:999px;padding:.2rem .8rem;font-size:.78rem}
+  .pastille.dep{background:var(--accent)}
+  .nav-jours{display:flex;justify-content:space-between;margin-top:1.4rem}
+  .nav-jours button{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:.55rem 1rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.85rem}
+  .nav-jours button:disabled{opacity:.35;cursor:default}
+  footer{text-align:center;font-size:.78rem;color:#5b7482;padding:1rem}
+  .offline-ok{display:none;background:#e2f6e2;color:#1d6b2e;font-size:.8rem;text-align:center;padding:.35rem}
+  @media (min-width:640px){header h1{font-size:1.9rem}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚓ Croisière Caraïbes – MSC Seaview</h1>
+  <p>Magies de la Mer des Caraïbes · 8 jours / 7 nuits · Formule All Inclusive</p>
+  <p>Départ de Paris · <strong>13 au 21 mars 2027</strong></p>
+  <span class="badge">Carnet de bord des adhérents</span>
+</header>
+
+<div class="offline-ok" id="offlineOk">✅ Mode hors connexion actif — ce carnet fonctionne sans internet</div>
+
+<nav id="barreJours" aria-label="Choisir un jour"></nav>
+
+<main>
+  <section class="carte" id="apercu">
+    <h2>Vue d'ensemble du voyage</h2>
+    <p class="escale">MSC Seaview 5★ Plus · Vols réguliers directs · Pension complète</p>
+    <ul>
+      <li><strong>Vol aller :</strong> Paris → Fort-de-France (Martinique)</li>
+      <li><strong>7 nuits à bord</strong> en formule Easy All Inclusive « Tout à Volonté »</li>
+      <li><strong>Escales :</strong> Pointe-à-Pitre · Road Town · Philipsburg · Basseterre · St John's · Fort-de-France</li>
+      <li><strong>Vol retour :</strong> Fort-de-France → Paris, arrivée le 21 mars au matin</li>
+    </ul>
+    <div class="conseil"><strong> inclus :</strong> vols et taxes, transferts, taxes portuaires (130 €), frais de séjour, forfait boissons illimité, animations à bord, garantie financière Groupama.</div>
+  </section>
+  <div id="contenu"></div>
+  <div class="nav-jours">
+    <button id="prec">← Jour précédent</button>
+    <button id="suiv">Jour suivant →</button>
+  </div>
+</main>
+
+<footer>
+  Croisière organisée par Transgallia · 12, rue de l'Orme de la Croix, 10600 La Chapelle-Saint-Luc · 03 25 81 86 40<br>
+  Programme indicatif, susceptible d'adaptation selon la météo et contraintes locales.
+</footer>
+
+<script>
+const JOURS = [
+  {
+    j:"Jour 1", date:"Samedi 13 mars 2027", titre:"Paris → Fort-de-France", escale:"Martinique",
+    pts:[
+      "Enregistrement à l'aéroport de Paris et décollage sur vol régulier direct.",
+      "Accueil à Fort-de-France et transfert en autocar privatif au port.",
+      "Assistance aux formalités d'embarquement, déjeuner buffet à bord selon l'heure d'arrivée.",
+      "Mise à quai pour la nuit — départ du navire à 23h00."
+    ],
+    h:["Arrivée à bord dans l'après-midi","Départ 23h00"],
+    conseil:"Repas, animations et nuit à bord — la formule All Inclusive Tout à Volonté commence dès l'embarquement."
+  },
+  {
+    j:"Jour 2", date:"Dimanche 14 mars 2027", titre:"Pointe-à-Pitre", escale:"Guadeloupe",
+    pts:[
+      "Petit-déjeuner buffet à bord, puis journée libre à la découverte de Pointe-à-Pitre.",
+      "Incontournables : le marché coloré (épices, fruits tropicaux, artisanat), l'église Saint-Pierre et le musée Saint-John Perse.",
+      "Flânerie dans le centre-ville animé et visite de la Maison de la Canne.",
+      "Pause gourmande créole : bokit ou colombo, puis baignade à la plage de la Datcha."
+    ],
+    h:["Arrivée 08h00","Départ 19h00"],
+    conseil:"Le marché se vit le mieux le matin — pensez à la monnaie locale et à la crème solaire."
+  },
+  {
+    j:"Jour 3", date:"Lundi 15 mars 2027", titre:"Road Town", escale:"Îles Vierges britanniques",
+    pts:[
+      "Petit-déjeuner buffet à bord, journée libre en All Inclusive.",
+      "Visite du musée national et des rues colorées du centre-ville (artisanat, cafés typiques).",
+      "Plage de Cane Garden Bay : détente ou snorkeling dans une eau cristalline.",
+      "Randonnée possible au Sage Mountain National Park avec vue spectaculaire sur l'île."
+    ],
+    h:["Arrivée 07h00","Départ 19h00"],
+    conseil:"Ambiance chaleureuse et décontractée — les plats créoles du marché local valent le détour."
+  },
+  {
+    j:"Jour 4", date:"Mardi 16 mars 2027", titre:"Philipsburg", escale:"Saint-Martin",
+    pts:[
+      "Petit-déjeuner buffet à bord, journée libre.",
+      "Détente sur la plage de Great Bay, au bord de l'eau.",
+      "Shopping sur Front Street et découverte de l'architecture locale.",
+      "Vue panoramique depuis le Fort Amsterdam et dégustation dans les « lolos », restaurants de rue typiques."
+    ],
+    h:["Arrivée 07h00","Départ 19h00"],
+    conseil:"Une journée idéale pour allier plage, culture et gastronomie — le tout à pied depuis le port."
+  },
+  {
+    j:"Jour 5", date:"Mercredi 17 mars 2027", titre:"Basseterre", escale:"St Kitts & Nevis",
+    pts:[
+      "Petit-déjeuner buffet à bord, journée libre en All Inclusive.",
+      "Découverte de Basseterre, charmante capitale de St Kitts : architecture coloniale et atmosphère caribéenne.",
+      "Plages de sable doré et eaux turquoise à quelques minutes du port.",
+      "Possibilité d'excursions vers les fortifications historiques ou les paysages volcaniques de l'île."
+    ],
+    h:["Arrivée 07h00","Départ 19h00"],
+    conseil:"Le port est à quelques pas du centre-ville — facile de visiter en autonomie."
+  },
+  {
+    j:"Jour 6", date:"Jeudi 18 mars 2027", titre:"St John's", escale:"Antigua & Barbuda",
+    pts:[
+      "Petit-déjeuner buffet à bord, journée libre.",
+      "Visite de la cathédrale Saint-Jean, symbole emblématique de la ville.",
+      "Marchés colorés (artisanat local, produits frais) et musée national.",
+      "Détente au parc Centennial ou sur la plage de Dickenson Bay."
+    ],
+    h:["Arrivée 07h00","Départ 19h00"],
+    conseil:"Antigua compte 365 plages — une par jour de l'année. Dickenson Bay est la plus accessible depuis le port."
+  },
+  {
+    j:"Jour 7", date:"Vendredi 19 mars 2027", titre:"Journée en mer", escale:"Pleine mer des Caraïbes",
+    pts:[
+      "Petit-déjeuner buffet à bord, journée entièrement dédiée au navire.",
+      "Détente aux piscines, bains à remous et solariums ; spa MSC Aurea (massages, sauna, hammam).",
+      "Activités à bord : animations, théâtre, boutiques, salle de fitness face à la mer.",
+      "Soirée à bord : spectacle au théâtre et ambiances des bars et salons panoramiques."
+    ],
+    h:["Journée en mer"],
+    conseil:"Journée idéale pour profiter de la promenade panoramique extérieure, signature du MSC Seaview."
+  },
+  {
+    j:"Jour 8", date:"Samedi 20 mars 2027", titre:"Fort-de-France", escale:"Martinique — retour",
+    pts:[
+      "Petit-déjeuner buffet à bord.",
+      "Arrivée à Fort-de-France à 08h00 et débarquement.",
+      "Transfert en autocar privatif vers l'aéroport, assistance aux formalités.",
+      "Décollage sur vol régulier direct vers Paris dans la journée."
+    ],
+    h:["Arrivée 08h00","Débarquement puis transfert aéroport"],
+    conseil:"Préparez vos bagages la veille au soir — pensez à la franchise : 12 kg en cabine, 23 kg en soute."
+  },
+  {
+    j:"Jour 9", date:"Dimanche 21 mars 2027", titre:"Arrivée à Paris", escale:"Retour en France",
+    pts:[
+      "Petit-déjeuner et collations pendant le vol.",
+      "Arrivée à Paris dans la matinée.",
+      "Fin du voyage — et souvenirs plein la tête !"
+    ],
+    h:["Arrivée Paris dans la matinée"],
+    conseil:"L'horaire des escales est indicatif et peut varier ; à bord, consultez le programme quotidien remis chaque soir en cabine."
+  }
+];
+
+const barre=document.getElementById('barreJours'), contenu=document.getElementById('contenu');
+const prec=document.getElementById('prec'), suiv=document.getElementById('suiv');
+let courant=-1; // -1 = aperçu
+
+function onglets(){
+  const ap=document.createElement('button');
+  ap.textContent='⚓ Aperçu'; ap.dataset.i=-1;
+  if(courant===-1) ap.classList.add('actif');
+  ap.onclick=()=>afficher(-1);
+  barre.appendChild(ap);
+  JOURS.forEach((j,i)=>{
+    const b=document.createElement('button');
+    b.textContent='J'+(i+1)+' · '+(j.escale.split('—')[0]);
+    b.dataset.i=i;
+    if(courant===i) b.classList.add('actif');
+    b.onclick=()=>afficher(i);
+    barre.appendChild(b);
+  });
+  const pr=document.createElement('button');
+  pr.textContent='ℹ️ Infos pratiques'; pr.dataset.i='P';
+  if(courant==='P') pr.classList.add('actif');
+  pr.onclick=()=>afficher('P');
+  barre.appendChild(pr);
+}
+
+function afficher(i){
+  courant=i;
+  barre.innerHTML=''; onglets();
+  const bouton=barre.querySelector('[data-i="'+i+'"]');
+  if(bouton) bouton.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  if(i===-1){
+    contenu.innerHTML='';
+    prec.disabled=true;
+  }else if(i==='P'){
+    contenu.innerHTML=`
+      <section class="carte">
+        <p class="date">Avant et pendant le voyage</p>
+        <h2>🧳 Bagages & vols</h2>
+        <p class="escale">Vols réguliers directs Paris ⇆ Fort-de-France</p>
+        <ul>
+          <li>Franchise bagages : <strong>12 kg en cabine</strong> et <strong>23 kg en soute</strong>.</li>
+          <li>Transferts port ⇆ aéroport en autocar privatif inclus, avec assistance.</li>
+          <li>Conservez vos documents de voyage (reçus d'enregistrement, carte d'embarquement) accessibles.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">🛂 Formalités</h2>
+        <ul>
+          <li>Passeport <strong>valide</strong> (vérifiez la date d'expiration dès maintenant — plusieurs escales hors de l'UE).</li>
+          <li>Aucun visa requis pour les escales prévues pour les ressortissants français ; à confirmer avant départ.</li>
+          <li>Carte d'identité non suffisante : le passeport est obligatoire.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">🍹 Formule All Inclusive « Tout à Volonté »</h2>
+        <ul>
+          <li>Cocktails classiques et sans alcool, spiritueux, vins au verre, bières, sodas, jus, eaux, boissons chaudes.</li>
+          <li>Frais de service sur les boissons inclus — pension complète à bord.</li>
+          <li>Restaurants de spécialités et excursions : en supplément.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">💶 Budget & tarifs</h2>
+        <ul>
+          <li>Cabine intérieure Deluxe : <strong>1 875 €</strong> · Vue mer Deluxe : <strong>1 995 €</strong> · Balcon Deluxe : <strong>2 155 €</strong> (base double, par personne).</li>
+          <li>3e/4e adulte : 1 615 € · Enfant 2–11 ans : 1 285 € · Enfant 12–17 ans : 1 335 €.</li>
+          <li>Assurances (assistance, rapatriement, annulation, bagages, Covid, grèves) : <strong>4 %</strong> en supplément.</li>
+          <li>Paiement à bord : tout est débité sur votre carte de bord, réglée à la fin de la croisière.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">☀️ Santé & confort</h2>
+        <ul>
+          <li>Crème solaire, chapeau, lunettes et maillot sont indispensables ; prévoyez un pull léger pour la climatisation.</li>
+          <li>Pharmacie personnelle de base : les frais médicaux à bord sont payants.</li>
+          <li>Monnaie : euro accepté à bord ; aux escales, dollar US fortement conseillé (petites coupures).</li>
+          <li>L'abus d'alcool est dangereux pour la santé — à consommer avec modération.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">📞 Contacts & assistance</h2>
+        <ul>
+          <li><strong>Transgallia</strong> — 12, rue de l'Orme de la Croix, 10600 La Chapelle-Saint-Luc.</li>
+          <li>Tél. 03 25 81 86 40 · Fax 03 25 73 51 70 · groupes@transgallia.com</li>
+          <li>www.voyages-groupes-transgallia.com · Garantie financière Groupama incluse.</li>
+        </ul>
+        <div class="conseil"><strong>💡 Rappel :</strong> les horaires d'escales sont indicatifs et peuvent varier. Chaque soir, le programme du lendemain est remis en cabine.</div>
+      </section>`;
+    prec.disabled=true; suiv.disabled=true;
+  }else{
+    const j=JOURS[i];
+    contenu.innerHTML=`
+      <section class="carte">
+        <p class="date">${j.j} — ${j.date}</p>
+        <h2>${j.titre}</h2>
+        <p class="escale">📍 ${j.escale}</p>
+        <ul>${j.pts.map(p=>'<li>'+p+'</li>').join('')}</ul>
+        <div class="horaires">${j.h.map((h,k)=>'<span class="pastille'+(k>0?' dep':'')+'">'+(k===0?'⏰ '+h:h)+'</span>').join('')}</div>
+        <div class="conseil"><strong>💡 Bon à savoir :</strong> ${j.conseil}</div>
+      </section>`;
+    prec.disabled=false;
+  }
+  prec.disabled = (i===-1);
+  suiv.disabled = (i===JOURS.length-1);
+}
+
+prec.onclick=()=>afficher(Math.max(-1,courant-1));
+suiv.onclick=()=>afficher(Math.min(JOURS.length-1,courant+1));
+
+// Gestes tactiles : balayage gauche/droite
+let x0=null;
+document.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',e=>{
+  if(x0===null)return;
+  const dx=e.changedTouches[0].clientX-x0;
+  if(Math.abs(dx)>60){
+    if(dx<0&&!suiv.disabled) suiv.click();
+    if(dx>0&&!prec.disabled) prec.click();
+  }
+  x0=null;
+},{passive:true});
+
+afficher(-1);
+
+// Mode hors connexion (service worker — actif uniquement une fois publié sur GitHub Pages)
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  navigator.serviceWorker.register('sw.js').then(()=>{
+    if(!navigator.onLine) document.getElementById('offlineOk').style.display='block';
+  }).catch(()=>{});
+}
+window.addEventListener('offline',()=>{document.getElementById('offlineOk').style.display='block'});
+window.addEventListener('online',()=>{document.getElementById('offlineOk').style.display='none'});
+</script>
+</body>
+</html>
