@@ -209,6 +209,7 @@ function onglets(){
 
 function afficher(i){
   courant=i;
+  document.getElementById('apercu').style.display = (i===-1) ? '' : 'none';
   barre.innerHTML=''; onglets();
   const bouton=barre.querySelector('[data-i="'+i+'"]');
   if(bouton) bouton.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
