@@ -1,6 +1,7 @@
 # Caraibesmars2027
 Version Vibe
-# Carnet de croisière – MSC Seaview · Caraïbes 2027
+
+## Carnet de croisière – MSC Seaview · Caraïbes 2027
 
 Programme jour par jour du voyage du 13 au 21 mars 2027 (Transgallia).
 
