@@ -63,10 +63,10 @@
     <ul>
       <li><strong>Vol aller :</strong> Paris → Fort-de-France (Martinique)</li>
       <li><strong>7 nuits à bord</strong> en formule Easy All Inclusive « Tout à Volonté »</li>
-      <li><strong>Escales :</strong> Pointe-à-Pitre · Road Town · Philipsburg · Basseterre · St John's · Fort-de-France</li>
+      <li><strong>Escales :</strong> Pointe-à-Pitre · Journée en mer · Philipsburg · St John's · Basseterre · Roseau · Fort-de-France</li>
       <li><strong>Vol retour :</strong> Fort-de-France → Paris, arrivée le 21 mars au matin</li>
     </ul>
-    <div class="conseil"><strong> inclus :</strong> vols et taxes, transferts, taxes portuaires (130 €), frais de séjour, forfait boissons illimité, animations à bord, garantie financière Groupama.</div>
+    <div class="conseil"><strong> inclus :</strong> vols et taxes, transferts, taxes portuaires, frais de séjour, forfait boissons illimité, animations à bord et assurances (assistance, rapatriement, annulation, bagages, Covid).</div>
   </section>
   <div id="contenu"></div>
   <div class="nav-jours">
@@ -76,7 +76,7 @@
 </main>
 
 <footer>
-  Croisière organisée par Transgallia · 12, rue de l'Orme de la Croix, 10600 La Chapelle-Saint-Luc · 03 25 81 86 40<br>
+  Croisière organisée par Style Danse93 en partenariat avec Sevran-Seniors de la Mairie de Sevran.<br>
   Programme indicatif, susceptible d'adaptation selon la météo et contraintes locales.
 </footer>
 
@@ -105,15 +105,15 @@ const JOURS = [
     conseil:"Le marché se vit le mieux le matin — pensez à la monnaie locale et à la crème solaire."
   },
   {
-    j:"Jour 3", date:"Lundi 15 mars 2027", titre:"Road Town", escale:"Îles Vierges britanniques",
+    j:"Jour 3", date:"Lundi 15 mars 2027", titre:"Journée en mer", escale:"Pleine mer des Caraïbes",
     pts:[
-      "Petit-déjeuner buffet à bord, journée libre en All Inclusive.",
-      "Visite du musée national et des rues colorées du centre-ville (artisanat, cafés typiques).",
-      "Plage de Cane Garden Bay : détente ou snorkeling dans une eau cristalline.",
-      "Randonnée possible au Sage Mountain National Park avec vue spectaculaire sur l'île."
+      "Petit-déjeuner buffet à bord, première journée entièrement dédiée au navire.",
+      "Détente aux piscines, bains à remous et solariums, ou moment spa (massages, sauna, hammam).",
+      "Activités à bord : animations en journée, sports, boutiques, casino et salle de fitness face à la mer.",
+      "Soirée : spectacle au théâtre, bars et salons panoramiques."
     ],
-    h:["Arrivée 07h00","Départ 19h00"],
-    conseil:"Ambiance chaleureuse et décontractée — les plats créoles du marché local valent le détour."
+    h:["Journée en mer"],
+    conseil:"Idéal pour prendre ses repères sur le navire : réservez vos restaurants de spécialités et vos excursions dès ce premier jour."
   },
   {
     j:"Jour 4", date:"Mardi 16 mars 2027", titre:"Philipsburg", escale:"Saint-Martin",
@@ -127,18 +127,7 @@ const JOURS = [
     conseil:"Une journée idéale pour allier plage, culture et gastronomie — le tout à pied depuis le port."
   },
   {
-    j:"Jour 5", date:"Mercredi 17 mars 2027", titre:"Basseterre", escale:"St Kitts & Nevis",
-    pts:[
-      "Petit-déjeuner buffet à bord, journée libre en All Inclusive.",
-      "Découverte de Basseterre, charmante capitale de St Kitts : architecture coloniale et atmosphère caribéenne.",
-      "Plages de sable doré et eaux turquoise à quelques minutes du port.",
-      "Possibilité d'excursions vers les fortifications historiques ou les paysages volcaniques de l'île."
-    ],
-    h:["Arrivée 07h00","Départ 19h00"],
-    conseil:"Le port est à quelques pas du centre-ville — facile de visiter en autonomie."
-  },
-  {
-    j:"Jour 6", date:"Jeudi 18 mars 2027", titre:"St John's", escale:"Antigua & Barbuda",
+    j:"Jour 5", date:"Mercredi 17 mars 2027", titre:"St John's", escale:"Antigua & Barbuda",
     pts:[
       "Petit-déjeuner buffet à bord, journée libre.",
       "Visite de la cathédrale Saint-Jean, symbole emblématique de la ville.",
@@ -149,15 +138,26 @@ const JOURS = [
     conseil:"Antigua compte 365 plages — une par jour de l'année. Dickenson Bay est la plus accessible depuis le port."
   },
   {
-    j:"Jour 7", date:"Vendredi 19 mars 2027", titre:"Journée en mer", escale:"Pleine mer des Caraïbes",
+    j:"Jour 6", date:"Jeudi 18 mars 2027", titre:"Basseterre", escale:"St Kitts & Nevis",
     pts:[
-      "Petit-déjeuner buffet à bord, journée entièrement dédiée au navire.",
-      "Détente aux piscines, bains à remous et solariums ; spa MSC Aurea (massages, sauna, hammam).",
-      "Activités à bord : animations, théâtre, boutiques, salle de fitness face à la mer.",
-      "Soirée à bord : spectacle au théâtre et ambiances des bars et salons panoramiques."
+      "Petit-déjeuner buffet à bord, journée libre en All Inclusive.",
+      "Découverte de Basseterre, capitale de St Kitts : architecture coloniale et atmosphère caribéenne.",
+      "Plages de sable doré et eaux turquoise à quelques minutes du port.",
+      "Possibilité d'excursions vers les fortifications historiques ou les paysages volcaniques de l'île."
     ],
-    h:["Journée en mer"],
-    conseil:"Journée idéale pour profiter de la promenade panoramique extérieure, signature du MSC Seaview."
+    h:["Arrivée 07h00","Départ 19h00"],
+    conseil:"Le port est à quelques pas du centre-ville — facile de visiter en autonomie."
+  },
+  {
+    j:"Jour 7", date:"Vendredi 19 mars 2027", titre:"Roseau", escale:"Île de la Dominique",
+    pts:[
+      "Petit-déjeuner buffet à bord, journée libre.",
+      "Roseau, capitale attractive de la Dominique : jardins botaniques, architecture de style colonial et cathédrale Saint-Patrick.",
+      "L'île aux 365 rivières : le bruit de l'eau y est omniprésent, en particulier aux sources thermales en périphérie de Roseau.",
+      "Ne manquez pas la cascade d'Hibiscus Falls et sa piscine naturelle où se baigner, au cœur d'une nature époustouflante."
+    ],
+    h:["Arrivée 07h00","Départ 19h00"],
+    conseil:"La nature règne en maître en Dominique — chaussures confortables recommandées pour les cascades et sentiers."
   },
   {
     j:"Jour 8", date:"Samedi 20 mars 2027", titre:"Fort-de-France", escale:"Martinique — retour",
@@ -241,10 +241,15 @@ function afficher(i){
         </ul>
         <h2 style="margin-top:1.2rem">💶 Budget & tarifs</h2>
         <ul>
-          <li>Cabine intérieure Deluxe : <strong>1 875 €</strong> · Vue mer Deluxe : <strong>1 995 €</strong> · Balcon Deluxe : <strong>2 155 €</strong> (base double, par personne).</li>
-          <li>3e/4e adulte : 1 615 € · Enfant 2–11 ans : 1 285 € · Enfant 12–17 ans : 1 335 €.</li>
-          <li>Assurances (assistance, rapatriement, annulation, bagages, Covid, grèves) : <strong>4 %</strong> en supplément.</li>
+          <li>Cabine intérieure Deluxe : <strong>1 975 €</strong> · Vue mer Deluxe : <strong>2 110 €</strong> · Balcon Deluxe : <strong>2 260 €</strong> (base double, par personne).</li>
+          <li><strong>Échéancier de paiement :</strong> acompte à l'inscription (595 € / 631 € / 682 € selon cabine), puis échéances le 01/09/2026, le 01/11/2026 et le 01/02/2027.</li>
+          <li><strong>Assurances incluses :</strong> Assistance / Rapatriement / Annulation / Bagages / Covid.</li>
           <li>Paiement à bord : tout est débité sur votre carte de bord, réglée à la fin de la croisière.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">🚫 Conditions d'annulation</h2>
+        <ul>
+          <li>Jusqu'à 90 jours avant le départ : <strong>15 %</strong> · de 89 à 60 jours : <strong>30 %</strong> · de 59 à 30 jours : <strong>50 %</strong>.</li>
+          <li>De 29 à 15 jours avant le départ : <strong>70 %</strong> · moins de 14 jours : <strong>100 %</strong> du montant de la croisière.</li>
         </ul>
         <h2 style="margin-top:1.2rem">☀️ Santé & confort</h2>
         <ul>
@@ -255,9 +260,9 @@ function afficher(i){
         </ul>
         <h2 style="margin-top:1.2rem">📞 Contacts & assistance</h2>
         <ul>
-          <li><strong>Transgallia</strong> — 12, rue de l'Orme de la Croix, 10600 La Chapelle-Saint-Luc.</li>
-          <li>Tél. 03 25 81 86 40 · Fax 03 25 73 51 70 · groupes@transgallia.com</li>
-          <li>www.voyages-groupes-transgallia.com · Garantie financière Groupama incluse.</li>
+          <li><strong>Style Danse93</strong> — 28, allée Paul Fort, 93270 Sevran.</li>
+          <li>Tél. 06 87 58 36 66 · style.danse93@gmail.com</li>
+          <li>Croisière organisée en partenariat avec Sevran-Seniors de la Mairie de Sevran.</li>
         </ul>
         <div class="conseil"><strong>💡 Rappel :</strong> les horaires d'escales sont indicatifs et peuvent varier. Chaque soir, le programme du lendemain est remis en cabine.</div>
       </section>`;
