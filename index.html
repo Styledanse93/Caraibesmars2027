@@ -86,9 +86,7 @@ const JOURS = [
   {
     j:"Jour 1", date:"Samedi 13 mars 2027", titre:"Paris → Fort-de-France", escale:"Martinique",
     pts:[
-      "Départ de Sevran → Paris Orly. Points de rendez-vous : ",
-          "5h30 Place Gaston Bussière",
-          "5h45 Les Glycines.",
+      "Départ de Sevran → Paris Orly. Points de rendez-vous :<br><span style='display:inline-block;width:5mm'></span>**5h30** : Place Gaston Bussière<br><span style='display:inline-block;width:5mm'></span>**5h45** : Les Glycines",
       "Vol Air Caraïbes TX 516 : Paris Orly 10h15 → Fort-de-France 14h10.",
       "Formalités d'enregistrement et d'embarquement.",
       "Accueil à Fort-de-France et transfert en autocar privatif au port.",
@@ -96,6 +94,8 @@ const JOURS = [
       "Mise à quai pour la nuit — départ du navire à 23h00."
     ],
     h:["Arrivée à bord dans l'après-midi","Départ 23h00"],
+    lien:"GF",
+    lienTexte:"📖 Ouvrir le guide d'escale Fort-de-France",
     conseil:"Repas, animations et nuit à bord — la formule All Inclusive Tout à Volonté commence dès l'embarquement."
   },
   {
@@ -107,8 +107,8 @@ const JOURS = [
       "Pause gourmande créole : bokit ou colombo, puis baignade à la plage de la Datcha."
     ],
     h:["Arrivée 08h00","Départ 19h00"],
-    lien:"pointe-a-pitre.pdf",
-    lienTexte:"📄 Guide d'escale Pointe-à-Pitre à pied (PDF)",
+    lien:"G",
+    lienTexte:"📖 Ouvrir le guide d'escale Pointe-à-Pitre",
     conseil:"Le marché se vit le mieux le matin — pensez à la monnaie locale et à la crème solaire."
   },
   {
@@ -131,6 +131,8 @@ const JOURS = [
       "Vue panoramique depuis le Fort Amsterdam et dégustation dans les « lolos », restaurants de rue typiques."
     ],
     h:["Arrivée 07h00","Départ 19h00"],
+    lien:"GP",
+    lienTexte:"📖 Ouvrir le guide d'escale Philipsburg",
     conseil:"Une journée idéale pour allier plage, culture et gastronomie — le tout à pied depuis le port."
   },
   {
@@ -142,6 +144,8 @@ const JOURS = [
       "Détente au parc Centennial ou sur la plage de Dickenson Bay."
     ],
     h:["Arrivée 07h00","Départ 19h00"],
+    lien:"GS",
+    lienTexte:"📖 Ouvrir le guide d'escale St John's",
     conseil:"Antigua compte 365 plages — une par jour de l'année. Dickenson Bay est la plus accessible depuis le port."
   },
   {
@@ -153,6 +157,8 @@ const JOURS = [
       "Possibilité d'excursions vers les fortifications historiques ou les paysages volcaniques de l'île."
     ],
     h:["Arrivée 07h00","Départ 19h00"],
+    lien:"GB",
+    lienTexte:"📖 Ouvrir le guide d'escale Basseterre",
     conseil:"Le port est à quelques pas du centre-ville — facile de visiter en autonomie."
   },
   {
@@ -164,6 +170,8 @@ const JOURS = [
       "Ne manquez pas la cascade d'Hibiscus Falls et sa piscine naturelle où se baigner, au cœur d'une nature époustouflante."
     ],
     h:["Arrivée 07h00","Départ 19h00"],
+    lien:"GR",
+    lienTexte:"📖 Ouvrir le guide d'escale Roseau",
     conseil:"La nature règne en maître en Dominique — chaussures confortables recommandées pour les cascades et sentiers."
   },
   {
@@ -189,12 +197,146 @@ const JOURS = [
   }
 ];
 
+// ---- Guides d'escale (pages masquées) ----
+const GUIDES = {
+  GF: { retour:0, date:"Samedi 13 mars 2027 · Après-midi et soirée à Fort-de-France (départ du navire 23h00)", titre:"Fort-de-France, Martinique", sous:"Escale à pied & plages en navette maritime",
+    intro:"Histoire, culture, shopping, saveurs et baignade à deux pas du port — la mer remplace le taxi !",
+    alerte:"<strong>⚠️ Selon votre quai :</strong> Pointe Simon = en plein centre-ville, tout à pied (5 min pour la Savane) ; Terminal des Tourelles (grands navires) = 15-20 min de marche ou court taxi.",
+    blocs:[
+      ["Selon le temps que vous avez",[
+        "<strong>2-3 h :</strong> place de la Savane et bibliothèque Schoelcher (5-10 min du quai), Grand Marché couvert et cathédrale Saint-Louis.",
+        "<strong>Après-midi/journée :</strong> fort Saint-Louis (visite guidée), puis navette maritime pour l'Anse Mitan ou la Pointe du Bout (Trois-Îlets) pour une baignade avant le retour."
+      ]],
+      ["Les incontournables à pied (moins de 1,5 km)",[
+        "<strong>Parc de la Savane</strong> (0,5 km) : allées sous les flamboyants, statue de l'impératrice Joséphine, vue sur le fort.",
+        "<strong>Grand Marché couvert</strong> (0,6 km) : épices (vanille, colombo, cannelle), fruits tropicaux, artisanat, punchs. Fermé le dimanche.",
+        "<strong>Cathédrale Saint-Louis</strong> (0,6 km) : en travaux actuellement, intérieur possiblement inaccessible.",
+        "<strong>Bibliothèque Schoelcher</strong> (0,7 km) : joyau d'architecture métallique du XIXe, le bâtiment le plus visité de la Martinique. Horaires à vérifier."
+      ]],
+      ["Musées et patrimoine",[
+        "<strong>Fort Saint-Louis</strong> (0,8 km) : citadelle du XVIIe, visites guidées uniquement sur réservation (mar-sam). Fermé dimanche et lundi.",
+        "<strong>Jardin de Balata</strong> (10 km, taxi 25 min) : ouvert tous les jours 9h-18h, entrée 16 € — à combiner avec le Sacré-Cœur de Balata."
+      ]],
+      ["Plages : la navette maritime, atout n°1",[
+        "<strong>Pas de vraie plage au cœur de la ville</strong> : les plus belles plages se rejoignent en bateau (Blue Lines, boulevard Alfassa, au milieu du port), 7j/7, ~6 € l'aller, traversée ~30 min.",
+        "<strong>Anse Mitan / Pointe du Bout</strong> (Trois-Îlets) : sable blanc, activités nautiques, restaurants — idéales pour 4-5 h.",
+        "<strong>Anse à l'Âne / Bourg des Trois-Îlets</strong> : plage familiale paisible ; village natal de Joséphine, marché artisanal ouvert le dimanche aussi.",
+        "Vérifier l'heure du dernier bateau retour et garder 30 min de marge avant l'embarquement."
+      ]],
+      ["Souvenirs à ramener",[
+        "Épices du Grand Marché : vanille, colombo, safran.",
+        "Rhum martiniquais AOC : Dillon (distillerie à 2,4 km), La Favorite, Clément.",
+        "Vannerie, madras, bijoux créoles, tablettes coco et sorbets fruit de la passion.",
+        "Dégustation : accras, féroce d'avocat, boucané, ti-punch."
+      ]]
+    ]},
+  GP: { retour:3, date:"Mardi 16 mars 2027 · Escale 07h00 → 19h00", titre:"Philipsburg, Sint Maarten (Saint-Martin)", sous:"Escale à pied, plages & infos taxis",
+    intro:"L'escale la plus facile des Caraïbes : plage en ville, shopping duty-free, tout est organisé pour les croisiéristes.",
+    alerte:"<strong>💡 Monnaie :</strong> dollar US accepté partout côté néerlandais ; euro côté français. Cartes bancaires largement acceptées.",
+    blocs:[
+      ["Selon le temps que vous avez",[
+        "<strong>2-3 h :</strong> water taxi ($7-8 pass journée) ou marche (20-25 min) jusqu'au boardwalk ; baignade à Great Bay Beach et shopping sur Front Street.",
+        "<strong>Journée complète :</strong> taxi vers Maho Beach (avions au-dessus des baigneurs) et/ou Orient Bay côté français, ou tour de l'île (Marigot, Grand-Case)."
+      ]],
+      ["Les incontournables",[
+        "<strong>Boardwalk et Great Bay Beach</strong> : plage de sable blanc de 1,5 km bordée de restaurants et beach clubs.",
+        "<strong>Front Street</strong> : l'artère du shopping duty-free, l'une des mieux fournies des Caraïbes (bijouterie, parfums, rhums) ; Courthouse du XVIIIe.",
+        "<strong>Fort Amsterdam</strong> (2 km) : forteresse hollandaise de 1620, vue sur Great Bay ; plage intime de Little Bay juste en dessous."
+      ]],
+      ["Plages à proximité",[
+        "<strong>Great Bay Beach</strong> ⭐ (en ville) : eau calme, beach clubs — parfaite pour une escale courte.",
+        "<strong>Maho Beach</strong> ⭐ (9 km, taxi 15-20 min, $20-25) : les jumbo jets atterrissant juste au-dessus des têtes ; attention aux jets-blast.",
+        "<strong>Mullet Bay</strong> (10 km, ~$25) : eau turquoise, moins de monde, snorkeling.",
+        "<strong>Orient Bay</strong> ⭐ (côté français, 12 km, $22-25) : le « Saint-Tropez des Caraïbes », beach clubs et nautisme."
+      ]],
+      ["Taxis et transports",[
+        "<strong>Pas d'Uber</strong> à Saint-Martin : taxis officiels à tarifs fixes par zone, affichés au terminal.",
+        "Taxi stand à la sortie du terminal ; station Front Street / Walter Plantz Square pour le retour.",
+        "Tarifs fixes : Philipsburg $10 · Marigot $18 · Maho $20-25 · Orient Bay $22-25 · tour de l'île ~$90 (3 h, 2 pers.).",
+        "<strong>Water taxi</strong> : pass journée illimité ~$7-8 entre la jetée et le boardwalk.",
+        "Minivans locaux $2-3 entre Philipsburg et Marigot (option économe)."
+      ]],
+      ["Souvenirs à ramener",[
+        "Rhums et liqueurs duty-free, bijoux et montres (parmi les meilleurs prix des Caraïbes).",
+        "Artisanat local, madras, épices, sauces au piment ; « johnny cakes » à goûter sur le boardwalk."
+      ]]
+    ]},
+  GS: { retour:4, date:"Mercredi 17 mars 2027 · Escale 07h00 → 19h00", titre:"St John's, Antigua & Barbuda", sous:"Escale à pied, plages & infos taxis",
+    intro:"« 365 plages, une pour chaque jour de l'année » — on débarque en pleine ville, tout le reste s'atteint en taxi.",
+    alerte:"<strong>⚠️ Aucune plage à pied du port</strong> (la plus proche, Fort James, est à 4 km). Taxi Dispatch Kiosk à Heritage Quay : tarifs officiels affichés. Dollar US accepté partout.",
+    blocs:[
+      ["Selon le temps que vous avez",[
+        "<strong>2-3 h :</strong> duty-free d'Heritage Quay et Redcliffe Quay au pied du navire, cathédrale St. John's et Public Market (10-15 min) ; ou taxi rapide vers Fort James Beach.",
+        "<strong>Journée complète :</strong> combo Nelson's Dockyard + Shirley Heights ; ou route des plages du sud-ouest (Valley Church, Darkwood, Ffryes)."
+      ]],
+      ["Les incontournables à pied",[
+        "<strong>Heritage Quay</strong> (au pied du navire) : le duty-free le plus complet de la croisière avec Saint-Martin.",
+        "<strong>Redcliffe Quay</strong> (50 m) : entrepôts géorgiens du XVIIIe restaurés en boutiques et cafés — le joyau de St. John's.",
+        "<strong>Cathédrale St. John's</strong> (600 m) : imposante cathédrale anglicane de 1848, point de vue sur le port.",
+        "<strong>Public Market</strong> (800 m) : marché public animé, fermé le dimanche.",
+        "<strong>Fort James</strong> (4 km, taxi ~$12) : forteresse du XVIIIe, canons d'origine, plage juste en dessous."
+      ]],
+      ["Plages à proximité",[
+        "<strong>Fort James Beach</strong> ⭐ (4 km, ~$12) : l'option « baignade rapide » pour une escale courte.",
+        "<strong>Dickenson Bay</strong> (7 km, $15-18) : grande plage animée des hôtels du nord, nautisme et beach bars.",
+        "<strong>Valley Church</strong> (14 km, ~$24-26) : lagon turquoise photogénique, très prisée — arrivée tôt conseillée.",
+        "<strong>Darkwood</strong> (15 km, ~$24-26) : plage sauvage et superbe, moins de monde.",
+        "<strong>Nelson's Dockyard / Shirley Heights</strong> (~$24) : plages d'English Harbour à combiner avec la visite historique."
+      ]],
+      ["Taxis et transports",[
+        "<strong>Pas d'Uber</strong> en Antigua : taxis réglementés, tarifs fixes approuvés (base 4 pers., +$4-6 par passager suppl.).",
+        "Taxi Dispatch Kiosk à Heritage Quay : files de taxis enregistrés, aucune réservation nécessaire pour les plages proches.",
+        "Réservation à l'avance : BC Taxi & Tours, Antigua Taxi and Tours (chauffeur privé, tour personnalisé).",
+        "Le 17 mars est un mercredi : le party de Shirley Heights a lieu le dimanche — mais demandez conseil au kiosk.",
+        "Minibus depuis West Bus Station (~$1-2) : lignes 22 et 17, rythme local, à éviter si l'heure du navire est serrée."
+      ]],
+      ["Souvenirs à ramener",[
+        "English Harbour Rum (le « 10-year » vaut le détour), épices et confitures du Public Market.",
+        "Vannerie, poteries de Redcliffe Quay, bijoux duty-free d'Heritage Quay.",
+        "À goûter : fungie et saltfish (plat national), ananas noirs d'Antigua."
+      ]]
+    ]},
+  GB: { retour:5, date:"Jeudi 18 mars 2027 · Escale 07h00 → 19h00", titre:"Basseterre, Saint-Kitts", sous:"Escale à pied, plages & infos taxis",
+    intro:"Capitale coloniale, « Gibraltar des Antilles » et plages de la péninsule sud-est — le port le plus « doré » des Caraïbes.",
+    alerte:"<strong>⚠️ Aucune plage digne de ce nom à pied du port</strong> : les vraies plages (Frigate Bay, South Friars, Cockleshell) sont à 10-25 min de taxi. Dollar US accepté partout.",
+    blocs:[
+      ["Selon le temps que vous avez",[
+        "<strong>2-3 h :</strong> shopping duty-free de Port Zante, puis centre historique à pied : The Circus, Independence Square, co-cathédrale (10 min) ; ou taxi vers South Friars Bay.",
+        "<strong>Journée complète :</strong> Romney Manor + Brimstone Hill Fortress en taxi, ou Cockleshell Beach avec la vue sur Nevis ; ou la St Kitts Scenic Railway (~3 h, à réserver via le navire)."
+      ]],
+      ["Les incontournables à pied (moins de 1 km)",[
+        "<strong>Port Zante</strong> (au pied du navire) : village de shopping duty-free sur 27 acres, bars, restaurants, WiFi. Bay Road, à quelques rues, est moins cher.",
+        "<strong>The Circus</strong> (400 m) : rond-point inspiré de Piccadilly, Berkeley Memorial Clock Tower (1883) — le monument le plus photographié de l'île.",
+        "<strong>Independence Square</strong> (500 m) : ancienne place du marché aux esclaves, bordée de bâtiments géorgiens ; co-cathédrale de l'Immaculée Conception.",
+        "<strong>Old Treasury Building</strong> (300 m) : emblématique front de mer — le musée est fermé pour rénovation.",
+        "<strong>St George's Anglican Church</strong> (800 m) : église du XVIIIe, l'une des plus anciennes de l'île."
+      ]],
+      ["Plages à proximité",[
+        "<strong>South Friars Bay</strong> ⭐ (6 km, taxi 15-20 min, ~$16-20) : la plus accessible ; meilleur snorkeling de l'île, beach bars.",
+        "<strong>Frigate Bay</strong> (5 km, 10-15 min) : pôle balnéaire animé côté Atlantique, beach bars et nautisme.",
+        "<strong>Cockleshell Bay</strong> ⭐ (12 km, ~$25-40) : la carte postale — sable blanc, eau turquoise, vue imprenable sur Nevis ; arrêt photo à Timothy Hill.",
+        "<strong>Turtle Beach</strong> (13 km) : prolongement plus sauvage, ambiance locale, singes verts en fin de journée."
+      ]],
+      ["Taxis et transports",[
+        "<strong>Pas d'Uber</strong> à Saint-Kitts : taxis officiels réglementés, tarifs fixes par zone — et <strong>tous les chauffeurs sont aussi guides touristiques diplômés</strong>.",
+        "Taxi stand à la sortie de Port Zante (panneaux verts) ; station au Circus (+1 869-465-9053).",
+        "Tarifs (1-4 pers.) : centre $5-8 · Frigate Bay $15-25 · South Friars $16-20 · Cockleshell $25-40 · Romney Manor $40 A-R · Brimstone Hill $60 A-R · tour de l'île ~$120-160.",
+        "Convenir du retour dès l'aller : la plupart des chauffeurs reviennent vous chercher à l'heure convenue.",
+        "Ferry pour Nevis depuis le terminal à côté du port : ~45 min, ~$23 A-R — ne pas prendre le dernier bateau."
+      ]],
+      ["Souvenirs à ramener",[
+        "Batik Caribelle (Romney Manor), rhums Brinley's et Belmont Estate, épices et sauces pimentées.",
+        "Artisanat en bois, paniers, bijoux en coquillage ; à goûter : goat water, stewed saltfish, johnnycakes."
+      ]]
+    ]}
+};
+
 const barre=document.getElementById('barreJours'), contenu=document.getElementById('contenu');
 const prec=document.getElementById('prec'), suiv=document.getElementById('suiv');
 let courant=-1; // -1 = aperçu
 
 // Numéro de version affiché dans le footer — à incrémenter à chaque mise à jour du carnet
-const VERSION='v3 — 07/11/2026';
+const VERSION='v6 — 07/11/2026';
 document.getElementById('version').textContent='Carnet '+VERSION;
 
 function onglets(){
@@ -277,6 +419,137 @@ function afficher(i){
         <div class="conseil"><strong>💡 Rappel :</strong> les horaires d'escales sont indicatifs et peuvent varier. Chaque soir, le programme du lendemain est remis en cabine.</div>
       </section>`;
     prec.disabled=true; suiv.disabled=true;
+  }else if(i==='G'){
+    // Page masquée : guide d'escale Pointe-à-Pitre (accessible depuis J2, non listée dans le menu)
+    const boutonJ2=barre.querySelector('[data-i="1"]');
+    if(boutonJ2) boutonJ2.classList.add('actif');
+    contenu.innerHTML=`
+      <section class="carte">
+        <p class="date">Dimanche 14 mars 2027 · Escale 08h00 → 19h00</p>
+        <h2>📖 Guide d'escale — Pointe-à-Pitre & Le Gosier</h2>
+        <p class="escale">Guide libre pour les passagers du groupe · MSC World Europa</p>
+        <p>Chacun choisit son programme : visite • plage • îlet • restaurant • promenade • shopping.</p>
+        <div class="conseil"><strong>⏰ Règle d'or :</strong> départ du navire à 19h — être de retour dans le secteur du terminal vers <strong>17h30</strong> au plus tard.</div>
+        <h2 style="margin-top:1.2rem">Choisissez votre journée</h2>
+        <ul>
+          <li><strong>A — Découverte de Pointe-à-Pitre :</strong> place de la Victoire, rues du centre historique, marché aux épices si ouvert, église Saint-Pierre-et-Saint-Paul (extérieur si les travaux continuent), puis éventuellement Mémorial ACTe.</li>
+          <li><strong>B — Plage facile :</strong> taxi vers la plage de la Datcha. Baignade, repos, déjeuner. Retour en taxi.</li>
+          <li><strong>C — Datcha + îlet du Gosier :</strong> taxi jusqu'à la Datcha/Anse Tabarin, navette maritime vers l'îlet, plage et promenade, retour, déjeuner, bateau. Horaires et tarif de la navette à reconfirmer en 2027.</li>
+          <li><strong>D — Plage plus sauvage :</strong> taxi vers Petit-Havre. Prévoir un taxi retour convenu à l'avance.</li>
+          <li><strong>E — Journée gourmande :</strong> promenade dans Pointe-à-Pitre le matin, déjeuner créole, retour tranquille au navire.</li>
+          <li><strong>F — Flânerie / souvenirs :</strong> place de la Victoire, centre historique, boutiques et artisanat, déjeuner, retour au terminal.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">Pointe-à-Pitre à pied</h2>
+        <p><strong>Point de départ :</strong> secteur du terminal de croisière, quai Ferdinand de Lesseps. Parcours conseillé : environ 1h30 à 2h sans visite de musée.</p>
+        <ul>
+          <li>Terminal → Place de la Victoire : 0,5 km — grande place historique</li>
+          <li>Place → Marché aux Épices : 0,3 km — épices, produits locaux, souvenirs</li>
+          <li>Marché → Église Saint-Pierre-et-Saint-Paul : 0,3 km — architecture métallique</li>
+          <li>Église → Mémorial ACTe : 0,8 km — musée et esplanade</li>
+          <li>Mémorial → Terminal : 1,5 km — retour à pied si tout le monde est à l'aise</li>
+        </ul>
+        <div class="conseil"><strong>💡 Distances à pied indicatives :</strong> pour 34 personnes, prévoir davantage de temps qu'une personne seule. Mémorial ACTe : horaires et tarif à vérifier avant mars 2027. Église : travaux de restauration à surveiller.</div>
+        <h2 style="margin-top:1.2rem">Les plages — distances depuis le quai</h2>
+        <ul>
+          <li><strong>Datcha – Le Gosier :</strong> 7,5 km · taxi 20–25 min — la plus simple : plage, restaurants, services.</li>
+          <li><strong>Îlet du Gosier :</strong> 7,5 km + traversée · 20–25 min + bateau — décor carte postale, eau turquoise.</li>
+          <li><strong>Anse Tabarin :</strong> 7–8 km · 20–25 min — proche de la Datcha, option plage + navette.</li>
+          <li><strong>Petit-Havre :</strong> 16 km · 25–35 min — plus nature et plus tranquille.</li>
+          <li><strong>Anse à Jacques :</strong> 16 km · 25–35 min — petite plage plus naturelle.</li>
+        </ul>
+        <p style="font-size:.85rem;color:#5b7482">Distances routières indicatives depuis le secteur du quai ; temps de taxi selon la circulation. Pour Petit-Havre, réserver le taxi retour à l'avance. Baignade : vérifier les derniers résultats ARS avant de partir.</p>
+        <h2 style="margin-top:1.2rem">Où manger le dimanche ?</h2>
+        <ul>
+          <li><strong>Le Bistrot du petit Pointois</strong> (Pointe-à-Pitre) : 09h–23h — cuisine locale.</li>
+          <li><strong>Chez Doudou</strong> (Carénage, P-à-P) : 09h–17h — cuisine antillaise, déjeuner.</li>
+          <li><strong>Casa Datcha</strong> (plage de la Datcha) : 11h–19h — plage + déjeuner.</li>
+          <li><strong>COCO KAFE</strong> (marina du Gosier) : 09h–19h — cadre marina, repas.</li>
+        </ul>
+        <div class="conseil"><strong>💡 Conseil :</strong> pour un petit groupe allant à la Datcha, un restaurant sur ou près de la plage est le plus pratique. Pour plusieurs personnes, appeler à l'avance. Horaires 2026 à reconfirmer avant mars 2027.</div>
+        <h2 style="margin-top:1.2rem">Taxis et retour au navire</h2>
+        <ul>
+          <li>Pour une sortie plage, convenir dès l'aller du retour : heure, lieu précis, numéro du chauffeur.</li>
+          <li>Pour 34 personnes, ne pas compter sur un seul taxi trouvé au dernier moment.</li>
+          <li>Objectif : retour au terminal vers <strong>17h30</strong> ; départ de la plage vers <strong>16h</strong> pour une plage éloignée.</li>
+          <li>Pour l'îlet : ne jamais attendre la dernière navette.</li>
+          <li>Chacun peut être autonome, mais garder sur soi l'heure limite, l'adresse du terminal, un téléphone chargé et un moyen de paiement.</li>
+        </ul>
+        <div style="text-align:center;margin-top:1.2rem">
+          <button class="pdf-lien" onclick="afficher(1)">← Retour au Jour 2 · Pointe-à-Pitre</button>
+        </div>
+      </section>`;
+    prec.disabled=true; suiv.disabled=true;
+  }else if(i==='GR'){
+    // Page masquée : guide d'escale Roseau (Dominique), accessible depuis J7
+    const boutonJ7=barre.querySelector('[data-i="6"]');
+    if(boutonJ7) boutonJ7.classList.add('actif');
+    contenu.innerHTML=`
+      <section class="carte">
+        <p class="date">Vendredi 19 mars 2027 · Escale 07h00 → 19h00</p>
+        <h2>📖 Guide d'escale — Roseau, Dominique</h2>
+        <p class="escale">Escale à pied & nature à proximité du port · l'« île Nature »</p>
+        <p>Histoire, culture créole et merveilles naturelles à deux pas du port — mais le vrai trésor s'atteint en taxi ou excursion.</p>
+        <div class="conseil"><strong>⚠️ Particularité :</strong> cascades, gorges et forêts tropicales ne sont <strong>jamais accessibles à pied depuis le port</strong> (10-45 min de trajet). Réserver un chauffeur ou une excursion <strong>à l'avance</strong> est fortement conseillé, surtout si plusieurs navires sont à quai. Pas de plage de baignade au pied du port.</div>
+        <h2 style="margin-top:1.2rem">Selon le temps que vous avez</h2>
+        <ul>
+          <li><strong>2-3 h :</strong> Old Market au pied de la jetée, cathédrale Saint-Patrick, front de mer, puis jardin botanique (10-15 min à pied) — tout à pied.</li>
+          <li><strong>4-5 h :</strong> Champagne Beach (snorkeling) ou chutes de Trafalgar — taxi 10-20 min.</li>
+          <li><strong>Journée complète :</strong> Trafalgar + gorge de Ti Tou + Wotten Waven, ou Emerald Pool + Scotts Head — 20-40 min de trajet.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">Centre de Roseau (moins de 5 minutes à pied de la jetée)</h2>
+        <ul>
+          <li><strong>Old Market Square</strong> (50 m – 2 min) : ancien marché aux esclaves devenu marché artisanal coloré — paniers tressés, batiks, sculptures sur bois, savons et rhums locaux.</li>
+          <li><strong>Cathédrale Saint-Patrick</strong> (500 m – 7-10 min) : architecture gothique en pierre noire volcanique, au cœur du quartier colonial en damier.</li>
+          <li><strong>Dominica Museum</strong> (600 m – 8 min) : histoire des Kalinagos, traite négrière, géologie de l'île. Point de rendez-vous habituel des excursions.</li>
+          <li><strong>Jardin botanique</strong> (800 m – 10-15 min, gratuit, ouvert tous les jours 6h-19h) : 16 ha au pied du Morne Bruce — le bus scolaire écrasé par un baobab lors de l'ouragan David (1979), le banyan géant, le perroquet Sisserou.</li>
+          <li><strong>Morne Bruce</strong> : 15 min de montée raide par Jack's Walk Trail — point de vue panoramique sur Roseau, le port et la côte.</li>
+        </ul>
+        <div class="conseil"><strong>ℹ️ Si le navire accoste à Woodbridge Bay :</strong> environ 2,4 km / 30 min de marche ou un court taxi jusqu'au centre.</div>
+        <h2 style="margin-top:1.2rem">Nature et baignades à proximité</h2>
+        <ul>
+          <li><strong>Champagne Beach</strong> ⭐ snorkeling (5 km – taxi 10-15 min, ~10-15 USD l'aller) : des bulles volcaniques montent du fond marin — l'un des plus beaux spots de snorkeling des Caraïbes. Accessible aussi en minibus (~1,50 USD).</li>
+          <li><strong>Chutes de Trafalgar</strong> ⭐ incontournable (6 km – 20 min, ~15-20 USD) : cascades jumelles « Père et Mère » de 40 m, baignade dans les bassins d'eau chaude sulfureuse.</li>
+          <li><strong>Gorge de Ti Tou</strong> ⭐ aventure (6,5 km – 25 min, ~20-25 USD) : faille volcanique étroite où l'on nage entre les parois. Souvent combinée avec Trafalgar (excursion 3h30-4h).</li>
+          <li><strong>Sources chaudes de Wotten Waven</strong> (8 km – 20-25 min) : village thermal, bassins sulfureux et bains de boue.</li>
+          <li><strong>Emerald Pool</strong> (13 km – 30 min) : bassin émeraude sous une cascade, au cœur du parc national Morne Trois Pitons (UNESCO). Marche facile de 15 min.</li>
+          <li><strong>Scotts Head</strong> (15 km – 30-40 min) : pointe sud où la mer des Caraïbes rencontre l'Atlantique — réserve marine de snorkeling réputée.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">Monnaie, horaires et taxis</h2>
+        <ul>
+          <li>Monnaie : dollar des Caraïbes orientales (XCD), mais <strong>les euros et dollars US sont acceptés partout</strong> — inutile de changer.</li>
+          <li>Commerces : du lundi au vendredi environ 8h-16h avec pause déjeuner ; plus calme le week-end.</li>
+          <li><strong>Uber/Lyft n'existent pas</strong> : négocier le prix du taxi avant le départ (souvent à l'aller ET au retour).</li>
+          <li>Les excursions en ligne (à réserver avant l'escale) restent l'option la plus sûre pour garantir le retour au navire.</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">Souvenirs à ramener</h2>
+        <ul>
+          <li>Paniers tressés Kalinago, batiks, sculptures sur bois.</li>
+          <li>Rhum et « bush rum » locaux, bay rum, savons et huiles aromatiques, cacao et chocolat artisanal.</li>
+          <li>Dégustation sur le pouce : callaloo soup, accras, poisson braisé, jus de fruits frais au Old Market.</li>
+        </ul>
+        <div style="text-align:center;margin-top:1.2rem">
+          <button class="pdf-lien" onclick="afficher(6)">← Retour au Jour 7 · Roseau</button>
+        </div>
+      </section>`;
+    prec.disabled=true; suiv.disabled=true;
+  }else if(GUIDES[i]){
+    // Page masquée : guides d'escale (Fort-de-France, Philipsburg, St John's, Basseterre)
+    const g=GUIDES[i];
+    const bouton=barre.querySelector('[data-i="'+g.retour+'"]');
+    if(bouton) bouton.classList.add('actif');
+    contenu.innerHTML=`
+      <section class="carte">
+        <p class="date">${g.date}</p>
+        <h2>📖 Guide d'escale — ${g.titre}</h2>
+        <p class="escale">${g.sous}</p>
+        <p>${g.intro}</p>
+        <div class="conseil">${g.alerte}</div>
+        ${g.blocs.map(b=>'<h2 style="margin-top:1.2rem">'+b[0]+'</h2><ul>'+b[1].map(x=>'<li>'+x+'</li>').join('')+'</ul>').join('')}
+        <div style="text-align:center;margin-top:1.2rem">
+          <button class="pdf-lien" onclick="afficher(${g.retour})">← Retour</button>
+        </div>
+      </section>`;
+    prec.disabled=true; suiv.disabled=true;
   }else{
     const j=JOURS[i];
     contenu.innerHTML=`
@@ -284,16 +557,16 @@ function afficher(i){
         <p class="date">${j.j} — ${j.date}</p>
         <h2>${j.titre}</h2>
         <p class="escale">📍 ${j.escale}</p>
-        <ul>${j.pts.map(p=>'<li>'+p+'</li>').join('')}</ul>
+        <ul>${j.pts.map(p=>'<li>'+p.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')+'</li>').join('')}</ul>
         <div class="horaires">${j.h.map((h,k)=>'<span class="pastille'+(k>0?' dep':'')+'">'+(k===0?'⏰ '+h:h)+'</span>').join('')}</div>
-        ${j.lien?'<a class="pdf-lien" href="'+j.lien+'" target="_blank" rel="noopener">'+j.lienTexte+'</a>':''}
+        ${j.lien?'<button class="pdf-lien" onclick="afficher(\''+j.lien+'\')">'+j.lienTexte+'</button>':''}
         <div class="conseil"><strong>💡 Bon à savoir :</strong> ${j.conseil}</div>
       </section>`;
   }
   // Navigation linéaire : Aperçu → Infos pratiques → J1 … J9
   const pos = ORDRE.indexOf(i);
   prec.disabled = (pos<=0);
-  suiv.disabled = (pos===ORDRE.length-1);
+  suiv.disabled = (pos<0 || pos===ORDRE.length-1);
 }
 
 const ORDRE=[-1,'P',0,1,2,3,4,5,6,7,8];
