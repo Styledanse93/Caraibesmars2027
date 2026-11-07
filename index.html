@@ -36,7 +36,7 @@
   .pastille{background:var(--bleu);color:#fff;border-radius:999px;padding:.2rem .8rem;font-size:.78rem}
   .pastille.dep{background:var(--accent)}
   .nav-jours{display:flex;justify-content:space-between;margin-top:1.4rem}
-  .nav-jours button{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:.55rem 1rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.85rem}
+  .nav-jours button{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:.55rem 1rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.85rem}  .pdf-lien{display:inline-block;margin-top:.9rem;background:var(--accent);color:#fff;padding:.6rem 1rem;border-radius:10px;font-weight:600;text-decoration:none;font-size:.9rem}
   .nav-jours button:disabled{opacity:.35;cursor:default}
   footer{text-align:center;font-size:.78rem;color:#5b7482;padding:1rem}
   .offline-ok{display:none;background:#e2f6e2;color:#1d6b2e;font-size:.8rem;text-align:center;padding:.35rem}
@@ -58,8 +58,6 @@
 
 <main>
   <section class="carte" id="apercu">
-  <h2>Votre itinéraire</h2>
-<figure class="carte"><img src="carte.jpg" alt="Carte du circuit : Fort-de-France, Pointe-à-Pitre, Philipsburg, St John’s, Basseterre, Roseau" width="394" height="260"><figcaption>Le circuit de la croisière dans les Caraïbes</figcaption></figure>
     <h2>Vue d'ensemble du voyage</h2>
     <p class="escale">MSC World Europa 5★ Plus · Vols réguliers directs · Pension complète</p>
     <ul>
@@ -88,7 +86,9 @@ const JOURS = [
   {
     j:"Jour 1", date:"Samedi 13 mars 2027", titre:"Paris → Fort-de-France", escale:"Martinique",
     pts:[
-      "Enregistrement à l'aéroport de Paris et décollage sur vol régulier direct.",
+      "Départ de Sevran → Paris Orly. Points de rendez-vous : 5h30 Place Gaston Bussière · 5h45 Les Glycines.",
+      "Vol Air Caraïbes TX 516 : Paris Orly 10h15 → Fort-de-France 14h10.",
+      "Formalités d'enregistrement et d'embarquement.",
       "Accueil à Fort-de-France et transfert en autocar privatif au port.",
       "Assistance aux formalités d'embarquement, déjeuner buffet à bord selon l'heure d'arrivée.",
       "Mise à quai pour la nuit — départ du navire à 23h00."
@@ -105,6 +105,8 @@ const JOURS = [
       "Pause gourmande créole : bokit ou colombo, puis baignade à la plage de la Datcha."
     ],
     h:["Arrivée 08h00","Départ 19h00"],
+    lien:"pointe-a-pitre.pdf",
+    lienTexte:"📄 Guide d'escale Pointe-à-Pitre à pied (PDF)",
     conseil:"Le marché se vit le mieux le matin — pensez à la monnaie locale et à la crème solaire."
   },
   {
@@ -168,7 +170,7 @@ const JOURS = [
       "Petit-déjeuner buffet à bord.",
       "Arrivée à Fort-de-France à 08h00 et débarquement.",
       "Transfert en autocar privatif vers l'aéroport, assistance aux formalités.",
-      "Décollage sur vol régulier direct vers Paris dans la journée."
+      "Vol Air Caraïbes TX 517 : Fort-de-France 17h10 → Paris Orly, arrivée à 06h30 le 21/03/2027."
     ],
     h:["Arrivée 08h00","Débarquement puis transfert aéroport"],
     conseil:"Préparez vos bagages la veille au soir — pensez à la franchise : 12 kg en cabine, 23 kg en soute."
@@ -190,7 +192,7 @@ const prec=document.getElementById('prec'), suiv=document.getElementById('suiv')
 let courant=-1; // -1 = aperçu
 
 // Numéro de version affiché dans le footer — à incrémenter à chaque mise à jour du carnet
-const VERSION='v2 — 05/11/2026';
+const VERSION='v3 — 07/11/2026';
 document.getElementById('version').textContent='Carnet '+VERSION;
 
 function onglets(){
@@ -282,6 +284,7 @@ function afficher(i){
         <p class="escale">📍 ${j.escale}</p>
         <ul>${j.pts.map(p=>'<li>'+p+'</li>').join('')}</ul>
         <div class="horaires">${j.h.map((h,k)=>'<span class="pastille'+(k>0?' dep':'')+'">'+(k===0?'⏰ '+h:h)+'</span>').join('')}</div>
+        ${j.lien?'<a class="pdf-lien" href="'+j.lien+'" target="_blank" rel="noopener">'+j.lienTexte+'</a>':''}
         <div class="conseil"><strong>💡 Bon à savoir :</strong> ${j.conseil}</div>
       </section>`;
   }
