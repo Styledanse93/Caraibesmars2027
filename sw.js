@@ -1,6 +1,6 @@
 const CARNET = 'carnet-croisiere-v1';
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CARNET).then(c => c.addAll(['./', './index.html'])));
+  e.waitUntil(caches.open(CARNET).then(c => c.addAll(['./', './index.html', './pointe-a-pitre.pdf'])));
   self.skipWaiting();
 });
 self.addEventListener('activate', e => {
