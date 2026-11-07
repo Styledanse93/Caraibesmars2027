@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Programme jour par jour – Croisière MSC Seaview, Caraïbes, 13 au 21 mars 2027" />
-<meta name="theme-color" content="#0b3954" />
-<title>Carnet de croisière – MSC Seaview · Caraïbes 2027</title>
+<meta name="description" content="Programme jour par jour – Croisière MSC World Europa, Caraïbes, 13 au 21 mars 2027" />
+<meta name="theme-color" content="#1e3fad" />
+<title>Carnet de croisière – MSC World Europa · Caraïbes 2027</title>
 <style>
   :root{
     --bleu:#0b3954; --bleu2:#084d6b; --turquoise:#1ba0a2; --sable:#f4ead6;
@@ -14,7 +14,7 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--fond);color:var(--texte);line-height:1.6}
-  header{background:linear-gradient(135deg,var(--bleu) 0%,var(--bleu2) 60%,var(--turquoise) 100%);color:#fff;padding:1.6rem 1rem 1.2rem;text-align:center}
+  header{background:linear-gradient(135deg,#1e3fad 0%,#4169e1 55%,#5a7ff0 100%);color:#fff;padding:1.6rem 1rem 1.2rem;text-align:center}
   header h1{font-size:1.5rem;letter-spacing:.5px}
   header p{opacity:.9;font-size:.95rem;margin-top:.3rem}
   .badge{display:inline-block;background:var(--accent);color:#fff;border-radius:999px;padding:.15rem .8rem;font-size:.8rem;font-weight:600;margin-top:.6rem}
@@ -46,7 +46,7 @@
 <body>
 
 <header>
-  <h1>⚓ Croisière Caraïbes – MSC Seaview</h1>
+  <h1>⚓ Croisière Caraïbes – MSC World Europa</h1>
   <p>Magies de la Mer des Caraïbes · 8 jours / 7 nuits · Formule All Inclusive</p>
   <p>Départ de Paris · <strong>13 au 21 mars 2027</strong></p>
   <span class="badge">Carnet de bord des adhérents</span>
@@ -58,8 +58,10 @@
 
 <main>
   <section class="carte" id="apercu">
+  <h2>Votre itinéraire</h2>
+<figure class="carte"><img src="carte.jpg" alt="Carte du circuit : Fort-de-France, Pointe-à-Pitre, Philipsburg, St John’s, Basseterre, Roseau" width="394" height="260"><figcaption>Le circuit de la croisière dans les Caraïbes</figcaption></figure>
     <h2>Vue d'ensemble du voyage</h2>
-    <p class="escale">MSC Seaview 5★ Plus · Vols réguliers directs · Pension complète</p>
+    <p class="escale">MSC World Europa 5★ Plus · Vols réguliers directs · Pension complète</p>
     <ul>
       <li><strong>Vol aller :</strong> Paris → Fort-de-France (Martinique)</li>
       <li><strong>7 nuits à bord</strong> en formule Easy All Inclusive « Tout à Volonté »</li>
@@ -70,14 +72,15 @@
   </section>
   <div id="contenu"></div>
   <div class="nav-jours">
-    <button id="prec">← Jour précédent</button>
-    <button id="suiv">Jour suivant →</button>
+    <button id="prec">← Précédent</button>
+    <button id="suiv">Suivant →</button>
   </div>
 </main>
 
 <footer>
   Croisière organisée par Style Danse93 en partenariat avec Sevran-Seniors de la Mairie de Sevran.<br>
-  Programme indicatif, susceptible d'adaptation selon la météo et contraintes locales.
+  Programme indicatif, susceptible d'adaptation selon la météo et contraintes locales.<br>
+  <span id="version" style="font-weight:700;color:var(--turquoise)"></span>
 </footer>
 
 <script>
@@ -186,12 +189,21 @@ const barre=document.getElementById('barreJours'), contenu=document.getElementBy
 const prec=document.getElementById('prec'), suiv=document.getElementById('suiv');
 let courant=-1; // -1 = aperçu
 
+// Numéro de version affiché dans le footer — à incrémenter à chaque mise à jour du carnet
+const VERSION='v2 — 05/11/2026';
+document.getElementById('version').textContent='Carnet '+VERSION;
+
 function onglets(){
   const ap=document.createElement('button');
   ap.textContent='⚓ Aperçu'; ap.dataset.i=-1;
   if(courant===-1) ap.classList.add('actif');
   ap.onclick=()=>afficher(-1);
   barre.appendChild(ap);
+  const pr=document.createElement('button');
+  pr.textContent='ℹ️ Infos pratiques'; pr.dataset.i='P';
+  if(courant==='P') pr.classList.add('actif');
+  pr.onclick=()=>afficher('P');
+  barre.appendChild(pr);
   JOURS.forEach((j,i)=>{
     const b=document.createElement('button');
     b.textContent='J'+(i+1)+' · '+(j.escale.split('—')[0]);
@@ -200,11 +212,6 @@ function onglets(){
     b.onclick=()=>afficher(i);
     barre.appendChild(b);
   });
-  const pr=document.createElement('button');
-  pr.textContent='ℹ️ Infos pratiques'; pr.dataset.i='P';
-  if(courant==='P') pr.classList.add('actif');
-  pr.onclick=()=>afficher('P');
-  barre.appendChild(pr);
 }
 
 function afficher(i){
@@ -215,7 +222,6 @@ function afficher(i){
   if(bouton) bouton.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
   if(i===-1){
     contenu.innerHTML='';
-    prec.disabled=true;
   }else if(i==='P'){
     contenu.innerHTML=`
       <section class="carte">
@@ -278,14 +284,16 @@ function afficher(i){
         <div class="horaires">${j.h.map((h,k)=>'<span class="pastille'+(k>0?' dep':'')+'">'+(k===0?'⏰ '+h:h)+'</span>').join('')}</div>
         <div class="conseil"><strong>💡 Bon à savoir :</strong> ${j.conseil}</div>
       </section>`;
-    prec.disabled=false;
   }
-  prec.disabled = (i===-1);
-  suiv.disabled = (i===JOURS.length-1);
+  // Navigation linéaire : Aperçu → Infos pratiques → J1 … J9
+  const pos = ORDRE.indexOf(i);
+  prec.disabled = (pos<=0);
+  suiv.disabled = (pos===ORDRE.length-1);
 }
 
-prec.onclick=()=>afficher(Math.max(-1,courant-1));
-suiv.onclick=()=>afficher(Math.min(JOURS.length-1,courant+1));
+const ORDRE=[-1,'P',0,1,2,3,4,5,6,7,8];
+prec.onclick=()=>{const p=ORDRE.indexOf(courant); if(p>0) afficher(ORDRE[p-1]);};
+suiv.onclick=()=>{const p=ORDRE.indexOf(courant); if(p<ORDRE.length-1) afficher(ORDRE[p+1]);};
 
 // Gestes tactiles : balayage gauche/droite
 let x0=null;
