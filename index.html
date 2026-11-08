@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Programme jour par jour – Croisière MSC World Europa, Caraïbes, 13 au 21 mars 2027" />
 <meta name="theme-color" content="#1e3fad" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="icone.jpg" />
 <title>Carnet de croisière – MSC World Europa · Caraïbes 2027</title>
 <style>
   :root{
@@ -66,6 +68,25 @@
       <li><strong>Escales :</strong> Pointe-à-Pitre · Journée en mer · Philipsburg · St John's · Basseterre · Roseau · Fort-de-France</li>
       <li><strong>Vol retour :</strong> Fort-de-France → Paris, arrivée le 21 mars au matin</li>
     </ul>
+    <div style="text-align:center;margin-top:1.1rem">
+      <button id="btnInstall" class="pdf-lien" style="font-size:1rem">📲 Installer le carnet sur votre écran d'accueil</button>
+    </div>
+    <div id="installAide" class="carte" style="display:none;margin-top:1rem;background:#fdf6ec">
+      <h2 style="font-size:1.05rem">Comment installer le carnet</h2>
+      <p style="font-size:.92rem"><strong>Sur iPhone / iPad (Safari) :</strong></p>
+      <ol style="font-size:.92rem;padding-left:1.2rem">
+        <li>Touchez le bouton <strong>Partager</strong> (carré avec une flèche ↑, en bas de l'écran)</li>
+        <li>Faites défiler et touchez <strong>« Sur l'écran d'accueil »</strong></li>
+        <li>Toucher <strong>« Ajouter »</strong> en haut à droite — c'est fait ✅</li>
+      </ol>
+      <p style="font-size:.92rem"><strong>Sur Android (Chrome) :</strong></p>
+      <ol style="font-size:.92rem;padding-left:1.2rem">
+        <li>Touchez les <strong>trois points ⋮</strong> en haut à droite</li>
+        <li>Choisissez <strong>« Ajouter à l'écran d'accueil »</strong></li>
+        <li>Confirmez avec <strong>« Installer »</strong> — c'est fait ✅</li>
+      </ol>
+      <p style="font-size:.88rem;color:#5b7482">Une fois installé, le carnet s'ouvre comme une application, en plein écran, et fonctionne même sans internet.</p>
+    </div>
     <div class="conseil"><strong> inclus :</strong> vols et taxes, transferts, taxes portuaires, frais de séjour, forfait boissons illimité, animations à bord et assurances (assistance, rapatriement, annulation, bagages, Covid).</div>
   </section>
   <div id="contenu"></div>
@@ -78,6 +99,7 @@
 <footer>
   Croisière organisée par Style Danse93 en partenariat avec Sevran-Seniors de la Mairie de Sevran.<br>
   Programme indicatif, susceptible d'adaptation selon la météo et contraintes locales.<br>
+  <span style="font-size:.72rem">Carnet réalisé avec l'aide de Vibe (Mistral AI)</span><br>
   <span id="version" style="font-weight:700;color:var(--turquoise)"></span>
 </footer>
 
@@ -90,7 +112,7 @@ const JOURS = [
       "Vol Air Caraïbes TX 516 : Paris Orly 10h15 → Fort-de-France 14h10.",
       "Formalités d'enregistrement et d'embarquement.",
       "Accueil à Fort-de-France et transfert en autocar privatif au port.",
-      "Assistance aux formalités d'embarquement, déjeuner buffet à bord selon l'heure d'arrivée.",
+      "Assistance aux formalités d'embarquement.",
       "Mise à quai pour la nuit — départ du navire à 23h00."
     ],
     h:["Arrivée à bord dans l'après-midi","Départ 23h00"],
@@ -109,7 +131,7 @@ const JOURS = [
     h:["Arrivée 08h00","Départ 19h00"],
     lien:"G",
     lienTexte:"📖 Ouvrir le guide d'escale Pointe-à-Pitre",
-    conseil:"Le marché se vit le mieux le matin — pensez à la monnaie locale et à la crème solaire."
+    conseil:"Le marché se vit le mieux le matin."
   },
   {
     j:"Jour 3", date:"Lundi 15 mars 2027", titre:"Journée en mer", escale:"Pleine mer des Caraïbes",
@@ -336,8 +358,28 @@ const prec=document.getElementById('prec'), suiv=document.getElementById('suiv')
 let courant=-1; // -1 = aperçu
 
 // Numéro de version affiché dans le footer — à incrémenter à chaque mise à jour du carnet
-const VERSION='v6 — 07/11/2026';
+const VERSION='v7 — 08/11/2026';
 document.getElementById('version').textContent='Carnet '+VERSION;
+
+// ---- Bouton d'installation sur l'écran d'accueil ----
+let installPromptEvt=null;
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault();
+  installPromptEvt=e;
+});
+document.getElementById('btnInstall').onclick=async()=>{
+  if(installPromptEvt){
+    // Android / Chrome : déclenche la fenêtre officielle d'installation
+    installPromptEvt.prompt();
+    await installPromptEvt.userChoice;
+    installPromptEvt=null;
+  }else{
+    // iPhone / Safari (ou installation déjà faite) : affiche les gestes à faire
+    const aide=document.getElementById('installAide');
+    aide.style.display='block';
+    aide.scrollIntoView({behavior:'smooth'});
+  }
+};
 
 function onglets(){
   const ap=document.createElement('button');
@@ -391,17 +433,15 @@ function afficher(i){
           <li>Frais de service sur les boissons inclus — pension complète à bord.</li>
           <li>Restaurants de spécialités et excursions : en supplément.</li>
         </ul>
-        <h2 style="margin-top:1.2rem">💶 Budget & tarifs</h2>
+        <h2 style="margin-top:1.2rem">📱 Téléphone & internet à bord et aux escales</h2>
         <ul>
-          <li>Cabine intérieure Deluxe : <strong>1 975 €</strong> · Vue mer Deluxe : <strong>2 110 €</strong> · Balcon Deluxe : <strong>2 260 €</strong> (base double, par personne).</li>
-          <li><strong>Échéancier de paiement :</strong> acompte à l'inscription (595 € / 631 € / 682 € selon cabine), puis échéances le 01/09/2026, le 01/11/2026 et le 01/02/2027.</li>
-          <li><strong>Assurances incluses :</strong> Assistance / Rapatriement / Annulation / Bagages / Covid.</li>
-          <li>Paiement à bord : tout est débité sur votre carte de bord, réglée à la fin de la croisière.</li>
-        </ul>
-        <h2 style="margin-top:1.2rem">🚫 Conditions d'annulation</h2>
-        <ul>
-          <li>Jusqu'à 90 jours avant le départ : <strong>15 %</strong> · de 89 à 60 jours : <strong>30 %</strong> · de 59 à 30 jours : <strong>50 %</strong>.</li>
-          <li>De 29 à 15 jours avant le départ : <strong>70 %</strong> · moins de 14 jours : <strong>100 %</strong> du montant de la croisière.</li>
+          <li><strong>Règle de base :</strong> activez le <strong>mode avion</strong> dès l'embarquement, puis rallumez uniquement le WiFi. Sans cela, le téléphone se connecte au réseau « maritime » du navire et chaque communication est facturée très cher (plusieurs €/min, datas hors de prix).</li>
+          <li><strong>En Martinique, Guadeloupe et partie française de Saint-Martin :</strong> ce sont des départements français, votre forfait fonctionne comme en métropole (appels, SMS et data sans surcoût, roaming UE « comme à la maison »).</li>
+          <li><strong>Autres escales (Antigua, St Kitts, Dominique, partie néerlandaise de Saint-Martin) :</strong> hors UE, le roaming coûte très cher. Ne téléphonez qu'en WiFi (WhatsApp, Messenger, FaceTime).</li>
+          <li><strong>WiFi gratuit aux escales :</strong> bibliothèques, cafés, restaurants et centres commerciaux near du port en proposent presque tous — la solution la moins chère pour vos messages et appels.</li>
+          <li><strong>Internet à bord :</strong> le WiFi du navire est payant et relativement coûteux (forfaits à la journée ou au séjour, à comparer à bord) — le moins cher reste de naviguer uniquement aux escales, ou de partager un seul forfait entre plusieurs personnes (partage de connexion).</li>
+          <li><strong>Pour rester joignable à prix mini :</strong> un « pass voyage » de votre opérateur (Orange, SFR, Bouygues) ou une eSIM touristique (ex. Airalo) pour la zone Caraïbes coûte quelques euros pour quelques Go — à souscrire avant le départ, uniquement si vous avez vraiment besoin d'Internet hors WiFi.</li>
+          <li><strong>Numéros d'urgence :</strong> 112 (EU), 15 (Samu en Martinique/Guadeloupe), 911 (autres îles anglophones).</li>
         </ul>
         <h2 style="margin-top:1.2rem">☀️ Santé & confort</h2>
         <ul>

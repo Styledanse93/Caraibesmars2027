@@ -1,0 +1,11 @@
+{
+  "name": "Carnet Croisière Caraïbes 2027",
+  "short_name": "Croisière 2027",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#1e3fad",
+  "theme_color": "#1e3fad",
+  "icons": [
+    { "src": "icone.jpg", "sizes": "512x512", "type": "image/jpeg", "purpose": "any" }
+  ]
+}
