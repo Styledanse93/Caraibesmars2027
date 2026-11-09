@@ -38,7 +38,8 @@
   .pastille{background:var(--bleu);color:#fff;border-radius:999px;padding:.2rem .8rem;font-size:.78rem}
   .pastille.dep{background:var(--accent)}
   .nav-jours{display:flex;justify-content:space-between;margin-top:1.4rem}
-  .nav-jours button{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:.55rem 1rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.85rem}  .pdf-lien{display:inline-block;margin-top:.9rem;background:var(--accent);color:#fff;padding:.6rem 1rem;border-radius:10px;font-weight:600;text-decoration:none;font-size:.9rem}
+  .nav-jours button{background:var(--bleu);color:#fff;border:none;border-radius:10px;padding:.55rem 1rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.85rem}  .meteo{margin:.6rem 0;font-size:.9rem;background:#e8f4fa;border-radius:10px;padding:.5rem .8rem}
+  .pdf-lien{display:inline-block;margin-top:.9rem;background:var(--accent);color:#fff;padding:.6rem 1rem;border-radius:10px;font-weight:600;text-decoration:none;font-size:.9rem}
   .nav-jours button:disabled{opacity:.35;cursor:default}
   footer{text-align:center;font-size:.78rem;color:#5b7482;padding:1rem}
   .offline-ok{display:none;background:#e2f6e2;color:#1d6b2e;font-size:.8rem;text-align:center;padding:.35rem}
@@ -75,7 +76,7 @@
       <h2 style="font-size:1.05rem">Comment installer le carnet</h2>
       <p style="font-size:.92rem"><strong>Sur iPhone / iPad (Safari) :</strong></p>
       <ol style="font-size:.92rem;padding-left:1.2rem">
-        <li>Touchez le bouton <strong>Partager</strong> (carré avec une flèche ↑, en bas de l'écran)</li>
+        <li>Touchez les <strong>trois points ⋯</strong> en bas à droite, puis le bouton <strong>Partager</strong> (carré avec une flèche ↑, en bas de l'écran)</li>
         <li>Faites défiler et touchez <strong>« Sur l'écran d'accueil »</strong></li>
         <li>Toucher <strong>« Ajouter »</strong> en haut à droite — c'est fait ✅</li>
       </ol>
@@ -117,6 +118,7 @@ const JOURS = [
     ],
     h:["Arrivée à bord dans l'après-midi","Départ 23h00"],
     lien:"GF",
+    meteo:{lat:14.6036,lon:-61.0764,ville:"Fort-de-France"},
     lienTexte:"📖 Ouvrir le guide d'escale Fort-de-France",
     conseil:"Repas, animations et nuit à bord — la formule All Inclusive Tout à Volonté commence dès l'embarquement."
   },
@@ -130,6 +132,7 @@ const JOURS = [
     ],
     h:["Arrivée 08h00","Départ 19h00"],
     lien:"G",
+    meteo:{lat:16.2412,lon:-61.5334,ville:"Pointe-à-Pitre"},
     lienTexte:"📖 Ouvrir le guide d'escale Pointe-à-Pitre",
     conseil:"Le marché se vit le mieux le matin."
   },
@@ -154,6 +157,7 @@ const JOURS = [
     ],
     h:["Arrivée 07h00","Départ 19h00"],
     lien:"GP",
+    meteo:{lat:18.4260,lon:-63.0498,ville:"Philipsburg"},
     lienTexte:"📖 Ouvrir le guide d'escale Philipsburg",
     conseil:"Une journée idéale pour allier plage, culture et gastronomie — le tout à pied depuis le port."
   },
@@ -167,6 +171,7 @@ const JOURS = [
     ],
     h:["Arrivée 07h00","Départ 19h00"],
     lien:"GS",
+    meteo:{lat:17.1211,lon:-61.8437,ville:"St John's"},
     lienTexte:"📖 Ouvrir le guide d'escale St John's",
     conseil:"Antigua compte 365 plages — une par jour de l'année. Dickenson Bay est la plus accessible depuis le port."
   },
@@ -180,6 +185,7 @@ const JOURS = [
     ],
     h:["Arrivée 07h00","Départ 19h00"],
     lien:"GB",
+    meteo:{lat:17.3026,lon:-62.7177,ville:"Basseterre"},
     lienTexte:"📖 Ouvrir le guide d'escale Basseterre",
     conseil:"Le port est à quelques pas du centre-ville — facile de visiter en autonomie."
   },
@@ -193,6 +199,7 @@ const JOURS = [
     ],
     h:["Arrivée 07h00","Départ 19h00"],
     lien:"GR",
+    meteo:{lat:15.3017,lon:-61.3883,ville:"Roseau"},
     lienTexte:"📖 Ouvrir le guide d'escale Roseau",
     conseil:"La nature règne en maître en Dominique — chaussures confortables recommandées pour les cascades et sentiers."
   },
@@ -361,6 +368,59 @@ let courant=-1; // -1 = aperçu
 const VERSION='v7 — 08/11/2026';
 document.getElementById('version').textContent='Carnet '+VERSION;
 
+// ---- Météo du jour aux escales (Open-Meteo, chargée si internet disponible) ----
+const WMO={0:['☀️','ciel dégagé'],1:['🌤️','peu nuageux'],2:['⛅','partiellement nuageux'],3:['☁️','couvert'],45:['🌫️','brouillard'],48:['🌫️','brouillard givrant'],51:['🌦️','bruine légère'],53:['🌦️','bruine'],55:['🌧️','bruine forte'],61:['🌧️','pluie légère'],63:['🌧️','pluie'],65:['🌧️','pluie forte'],66:['🌧️','pluie verglaçante'],67:['🌧️','pluie verglaçante forte'],71:['🌨️','neige légère'],73:['🌨️','neige'],75:['🌨️','neige forte'],77:['🌨️','grésil'],80:['🌦️','averses légères'],81:['🌦️','averses'],82:['🌧️','averses fortes'],85:['🌨️','averses de neige'],86:['🌨️','averses de neige fortes'],95:['⛈️','orage'],96:['⛈️','orage avec grêle'],99:['⛈️','orage fort avec grêle']};
+function urlMeteo(m){ return 'https://api.open-meteo.com/v1/forecast?latitude='+m.lat+'&longitude='+m.lon+'&current=temperature_2m,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code&forecast_days=7&timezone=auto'; }
+const NOMS_JOURS=['dim','lun','mar','mer','jeu','ven','sam'];
+function htmlSemaine(d){
+  return d.daily.time.map((t,idx)=>{
+    const dt=new Date(t+'T12:00:00');
+    const ic2=WMO[d.daily.weather_code[idx]]||['🌡️','variable'];
+    return NOMS_JOURS[dt.getDay()]+' '+ic2[0]+' '+Math.round(d.daily.temperature_2m_max[idx])+'°/'+Math.round(d.daily.temperature_2m_min[idx])+'°';
+  }).join(' · ');
+}
+function sauverMeteo(ville,html){ try{ localStorage.setItem('meteo:'+ville, JSON.stringify({ts:Date.now(), html:html})); }catch(e){} }
+function lireMeteo(ville){ try{ const v=localStorage.getItem('meteo:'+ville); return v?JSON.parse(v):null; }catch(e){ return null; } }
+
+function chargerMeteo(j){
+  if(!j.meteo) return;
+  const el=document.getElementById('meteo');
+  if(!el) return;
+  el.textContent='⏳ Météo…';
+  fetch(urlMeteo(j.meteo))
+    .then(r=>r.json())
+    .then(d=>{
+      const ic=WMO[d.current.weather_code]||['🌡️','variable'];
+      el.innerHTML='<strong>'+ic[0]+' Météo à '+j.meteo.ville+' :</strong> '+ic[1]+', '+Math.round(d.current.temperature_2m)+'°C, vent '+Math.round(d.current.wind_speed_10m)+' km/h<br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>';
+      // Mise en cache pour la consultation hors connexion
+      sauverMeteo(j.meteo.ville, '<strong>'+ic[0]+' Météo à '+j.meteo.ville+' :</strong><br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>');
+      // Préchargement discret de toutes les autres escales (une seule fois par session en ligne)
+      prechargerMeteos();
+    })
+    .catch(()=>{
+      const c=lireMeteo(j.meteo.ville);
+      if(c){
+        const dte=new Date(c.ts);
+        el.innerHTML=c.html+'<br><span style="font-size:.78rem">📦 Enregistrée le '+dte.toLocaleDateString('fr-FR')+' à '+dte.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' — consultable hors connexion</span>';
+      }else{
+        el.textContent='📡 Météo indisponible hors connexion — ouvrez le carnet avec du WiFi une fois pour l\'enregistrer';
+      }
+    });
+}
+let meteosPrechargees=false;
+function prechargerMeteos(){
+  if(meteosPrechargees || !navigator.onLine) return;
+  meteosPrechargees=true;
+  JOURS.forEach(j=>{
+    if(!j.meteo) return;
+    if(lireMeteo(j.meteo.ville)) return;
+    fetch(urlMeteo(j.meteo)).then(r=>r.json()).then(d=>{
+      const ic=WMO[d.current.weather_code]||['🌡️','variable'];
+      sauverMeteo(j.meteo.ville, '<strong>'+ic[0]+' Météo à '+j.meteo.ville+' :</strong><br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>');
+    }).catch(()=>{});
+  });
+}
+
 // ---- Bouton d'installation sur l'écran d'accueil ----
 let installPromptEvt=null;
 window.addEventListener('beforeinstallprompt', e=>{
@@ -442,6 +502,11 @@ function afficher(i){
           <li><strong>Internet à bord :</strong> le WiFi du navire est payant et relativement coûteux (forfaits à la journée ou au séjour, à comparer à bord) — le moins cher reste de naviguer uniquement aux escales, ou de partager un seul forfait entre plusieurs personnes (partage de connexion).</li>
           <li><strong>Pour rester joignable à prix mini :</strong> un « pass voyage » de votre opérateur (Orange, SFR, Bouygues) ou une eSIM touristique (ex. Airalo) pour la zone Caraïbes coûte quelques euros pour quelques Go — à souscrire avant le départ, uniquement si vous avez vraiment besoin d'Internet hors WiFi.</li>
           <li><strong>Numéros d'urgence :</strong> 112 (EU), 15 (Samu en Martinique/Guadeloupe), 911 (autres îles anglophones).</li>
+        </ul>
+        <h2 style="margin-top:1.2rem">🌤️ Météo</h2>
+        <ul>
+          <li><strong>N'oubliez pas d'ouvrir le carnet la veille ou le jour du départ</strong> (12 ou 13 mars) avec une connexion internet : la météo de Fort-de-France s'affiche pour le jour d'arrivée, et celle de <strong>toutes les escales est enregistrée dans le carnet</strong> pour la consulter ensuite hors connexion.</li>
+          <li>La météo s'affiche automatiquement en haut de chaque page d'escale ; hors connexion, le carnet reste utilisable et indique simplement « indisponible ».</li>
         </ul>
         <h2 style="margin-top:1.2rem">☀️ Santé & confort</h2>
         <ul>
@@ -599,9 +664,11 @@ function afficher(i){
         <p class="escale">📍 ${j.escale}</p>
         <ul>${j.pts.map(p=>'<li>'+p.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')+'</li>').join('')}</ul>
         <div class="horaires">${j.h.map((h,k)=>'<span class="pastille'+(k>0?' dep':'')+'">'+(k===0?'⏰ '+h:h)+'</span>').join('')}</div>
+        ${j.meteo?'<div class="meteo" id="meteo">⏳ Météo du jour…</div>':''}
         ${j.lien?'<button class="pdf-lien" onclick="afficher(\''+j.lien+'\')">'+j.lienTexte+'</button>':''}
         <div class="conseil"><strong>💡 Bon à savoir :</strong> ${j.conseil}</div>
       </section>`;
+    chargerMeteo(j);
   }
   // Navigation linéaire : Aperçu → Infos pratiques → J1 … J9
   const pos = ORDRE.indexOf(i);
