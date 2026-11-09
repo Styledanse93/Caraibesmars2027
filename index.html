@@ -391,9 +391,10 @@ function chargerMeteo(j){
     .then(r=>r.json())
     .then(d=>{
       const ic=WMO[d.current.weather_code]||['🌡️','variable'];
-      el.innerHTML='<strong>'+ic[0]+' Météo à '+j.meteo.ville+' :</strong> '+ic[1]+', '+Math.round(d.current.temperature_2m)+'°C, vent '+Math.round(d.current.wind_speed_10m)+' km/h<br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>';
+      const auj=new Date().toLocaleDateString('fr-FR');
+      el.innerHTML='<strong>'+ic[0]+' Météo à '+j.meteo.ville+' ('+auj+') :</strong> '+ic[1]+', '+Math.round(d.current.temperature_2m)+'°C, vent '+Math.round(d.current.wind_speed_10m)+' km/h<br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>';
       // Mise en cache pour la consultation hors connexion
-      sauverMeteo(j.meteo.ville, '<strong>'+ic[0]+' Météo à '+j.meteo.ville+' :</strong><br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>');
+      sauverMeteo(j.meteo.ville, '<strong>'+ic[0]+' Météo à '+j.meteo.ville+' ('+auj+') :</strong><br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>');
       // Préchargement discret de toutes les autres escales (une seule fois par session en ligne)
       prechargerMeteos();
     })
@@ -416,7 +417,7 @@ function prechargerMeteos(){
     if(lireMeteo(j.meteo.ville)) return;
     fetch(urlMeteo(j.meteo)).then(r=>r.json()).then(d=>{
       const ic=WMO[d.current.weather_code]||['🌡️','variable'];
-      sauverMeteo(j.meteo.ville, '<strong>'+ic[0]+' Météo à '+j.meteo.ville+' :</strong><br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>');
+      sauverMeteo(j.meteo.ville, '<strong>'+ic[0]+' Météo à '+j.meteo.ville+' ('+new Date().toLocaleDateString('fr-FR')+')</strong> :<br><span style="font-size:.82rem">Prévisions 7 jours : '+htmlSemaine(d)+'</span>');
     }).catch(()=>{});
   });
 }
